@@ -43,12 +43,11 @@ var CURRENT_CACHES = {
 self.addEventListener('install', function(event) {
   var urlsToPrefetch = [
     './',
-    'js/sw.js',
+    'sw.js',
     'scripts/main.js',
     'index.html',
     'styles/index.css',
     // The videos are stored remotely with CORS enabled.
-    'fallout.mp4',
   ];
 
   // All of these logging statements should be visible via the "Inspect" interface
