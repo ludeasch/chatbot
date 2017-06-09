@@ -93,6 +93,7 @@ self.addEventListener('fetch', function(event) {
            'index.html',
            'styles/index.css',
         ]
+        )
     })
 
 
