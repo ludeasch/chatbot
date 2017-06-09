@@ -36,12 +36,12 @@ self.addEventListener('push', function(event) {
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
-var CURRENT_CACHES = 'cache-v2';
+var CURRENT_CACHES = {prefetch:'cache-v2'};
 
 self.addEventListener('install', function(event) {
   console.log('entro---no');
   event.waitUntil(
-    caches.open(CURRENT_CACHES).then(function(cache) {
+    caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
       return cache.addAll(
         [
            'scripts/main.js',
@@ -72,14 +72,14 @@ self.addEventListener('fetch', function(event) {
   console.log(event.request.url);
   if((!navigator.onLine)&&(event.request.url.includes("https://trim-mode-139918.firebaseio.com"))){
     event.respondWith(
-      caches.open(CURRENT_CACHES).then(function(cache) {
+      caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
 
         return cache.add(event.request)
           })
     )
   }else{
 
-    caches.open(CURRENT_CACHES).then(function(cache) {
+    caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
         cache.matchAll('https://trim-mode-139918.firebaseio.com/').then(function(response) {
           response.forEach(function(element, index, array) {
             console.log(element)
@@ -93,7 +93,6 @@ self.addEventListener('fetch', function(event) {
         })
         cache.match('https://dpzd3wxxq6kma.cloudfront.net/img/moni-moible.png').then(function(r){console.log("en cache")},function(r){
                 cache.add('https://dpzd3wxxq6kma.cloudfront.net/img/moni-moible.png')
-                console.log("cacho")
 
         })
         cache.match('styles/index.css').then(function(r){console.log("en cache")},function(r){
