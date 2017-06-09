@@ -36,12 +36,12 @@ self.addEventListener('push', function(event) {
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
-var CURRENT_CACHES = 'cache-v2'
-};
+var CURRENT_CACHES = 'cache-v2';
+
 self.addEventListener('install', function(event) {
   console.log('entro---');
   event.waitUntil(
-    caches.open(cacheName).then(function(cache) {
+    caches.open(CURRENT_CACHES).then(function(cache) {
       return cache.addAll(
         [
            'scripts/main.js',
