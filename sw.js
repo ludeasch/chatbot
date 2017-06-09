@@ -80,8 +80,8 @@ self.addEventListener('activate', function(event) {
 
 
 self.addEventListener('fetch', function(event) {
-  console.log(event);
-  if!(navigator.onLine){
+  console.log(event.request.url);
+  if(!navigator.onLine){
     event.respondWith(
       caches.open(CURRENT_CACHES).then(function(cache) {
         return cache.match(event.request).then(function (response) {
