@@ -68,24 +68,35 @@ self.addEventListener('activate', function(event) {
 });
 
 
-self.addEventListener('click',function(event){
-
-   debugger;
-
-})
-
 self.addEventListener('fetch', function(event) {
   console.log(event.request.url);
   if(!navigator.onLine){
     event.respondWith(
       caches.open(CURRENT_CACHES).then(function(cache) {
-        return cache.match(event.request).then(function (response) {
-          return response || fetch(event.request).then(function(response) {
-            cache.put(event.request, response.clone());
-            return response;
+
+        return cache.add(event.request)
+          });
+    )
+  }else{
+
+    caches.open(CURRENT_CACHES).then(function(cache) {
+        cache.matchAll('https://trim-mode-139918.firebaseio.com/').then(function(response) {
+          response.forEach(function(element, index, array) {
+            console.log(element)
+            event.respondWith(element)
+            cache.delete(element);
           });
         });
-      })
-    );
- }
+        cache.addAll(
+        [
+           'scripts/main.js',
+           'index.html',
+           'styles/index.css',
+        ]
+    })
+
+
+
+  }
+
 });
