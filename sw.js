@@ -21,7 +21,6 @@
 
 'use strict';
 
-const pushButton = self.querySelector('.conversation-compose');
 
 self.addEventListener('push', function(event) {
   console.log('[Service Worker] Push Received.');
