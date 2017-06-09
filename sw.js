@@ -42,7 +42,6 @@ var CURRENT_CACHES = {
 
 self.addEventListener('install', function(event) {
   var urlsToPrefetch = [
-    'sw.js',
     'scripts/main.js',
     'index.html',
     'styles/index.css',
