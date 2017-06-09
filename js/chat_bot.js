@@ -52,7 +52,7 @@ ChatBotApp.controller('ChatController', ['$scope', '$sce' ,'$http', '$timeout', 
                 vm.listMessage.push(data)
             }
             index = vm.listMessage.indexOf(data)
-            $http.post("https://trim-mode-139918.firebaseio.com/mensajes/mensajes.json",{params: data}).then(function(response){
+            $http.post("https://trim-mode-139918.firebaseio.com/mensajes/mensajes.json",data).then(function(response){
                             console.log("siiii!!")
 
 
