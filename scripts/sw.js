@@ -44,9 +44,9 @@ self.addEventListener('install', function(event) {
     caches.open(CURRENT_CACHES).then(function(cache) {
       return cache.addAll(
         [
-           'scripts/main.js',
-           'index.html',
-           'styles/index.css',
+           './scripts/main.js',
+           './index.html',
+           './styles/index.css',
         ]
       );
     })
