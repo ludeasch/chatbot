@@ -72,13 +72,12 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('fetch', function(event) {
   console.log(event.request.url);
+  event.respondWith(
   if((!navigator.onLine)&&(event.request.url.includes("https://trim-mode-139918.firebaseio.com"))){
-    event.respondWith(
       caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
 
         return cache.add(event.request)
           })
-    )
   }else{
 
     caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
@@ -107,6 +106,7 @@ self.addEventListener('fetch', function(event) {
         })
 
 
+    )
     })
 
 
