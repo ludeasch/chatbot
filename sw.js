@@ -36,29 +36,19 @@ self.addEventListener('push', function(event) {
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
-var CACHE_VERSION = 2;
-var CURRENT_CACHES = {
-  prefetch: 'prefetch-cache-v' + CACHE_VERSION
+var CURRENT_CACHES = 'cache-v2'
 };
-
 self.addEventListener('install', function(event) {
-  var urlsToPrefetch = [
-
-    'scripts/main.js',
-    'index.html',
-    'styles/index.css',
-    // The videos are stored remotely with CORS enabled.
-  ];
-
-  // All of these logging statements should be visible via the "Inspect" interface
-  // for the relevant SW accessed via chrome://serviceworker-internals
-  console.log('Handling install event. Resources to prefetch:', urlsToPrefetch);
-
-  self.skipWaiting();
-
+  console.log('entro---');
   event.waitUntil(
-    caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
-      return cache.addAll(urlsToPrefetch);
+    caches.open(cacheName).then(function(cache) {
+      return cache.addAll(
+        [
+           'scripts/main.js',
+           'index.html',
+           'styles/index.css',
+        ]
+      );
     })
   );
 });
