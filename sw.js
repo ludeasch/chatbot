@@ -87,13 +87,24 @@ self.addEventListener('fetch', function(event) {
             cache.delete(element);
           });
         });
-        cache.addAll(
-        [
-           'scripts/main.js',
-           'index.html',
-           'styles/index.css',
-        ]
-        )
+        cache.match('scripts/main.js').then(function(r){console.log("en cache")},function(r){
+                cache.add('scripts/main.js')
+
+        })
+        cache.match('README.md').then(function(r){console.log("en cache")},function(r){
+                cache.add('README.md')
+
+        })
+        cache.match('styles/index.css').then(function(r){console.log("en cache")},function(r){
+                cache.add('styles/index.css')
+
+        })
+        cache.match('index.html').then(function(r){console.log("en cache")},function(r){
+                cache.add('index.html')
+
+        })
+
+
     })
 
 
