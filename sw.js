@@ -36,7 +36,7 @@ self.addEventListener('push', function(event) {
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
-var CURRENT_CACHES = {prefetch:'cache-v2'};
+var CURRENT_CACHES = {prefetch:'prefetch-cache-v2'};
 
 self.addEventListener('install', function(event) {
   console.log('entro---no');
