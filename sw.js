@@ -70,7 +70,7 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('fetch', function(event) {
   console.log(event.request.url);
-  if(!navigator.onLine)&&(event.request.url.includes("https://trim-mode-139918.firebaseio.com")){
+  if((!navigator.onLine)&&(event.request.url.includes("https://trim-mode-139918.firebaseio.com"))){
     event.respondWith(
       caches.open(CURRENT_CACHES).then(function(cache) {
 
