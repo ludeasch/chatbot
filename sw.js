@@ -45,8 +45,7 @@ self.addEventListener('install', function(event) {
     caches.open(CURRENT_CACHES).then(function(cache) {
       return cache.addAll(
         [
-           './',
-          'sw.js',
+           'sw.js',
            'scripts/main.js',
            'index.html',
            'styles/index.css',
@@ -82,21 +81,23 @@ self.addEventListener('fetch', function(event) {
   console.log(event.request.url);
   event.respondWith(
       caches.open(CURRENT_CACHES).then(function(cache) {
-        if((!navigator.onLine)&&(event.request.url.includes("https://trim-mode-139918.firebaseio.com"))){
+        if(event.request.url.includes("https://trim-mode-139918.firebaseio.com")){
+          if(!navigator.onLine){
+                console.log("mira")
+                return cache.add(event.request)
 
-              return cache.add(event.request)
-
-        }else{
+          }else{
 
 
-          return cache.match(event.request).then(function (response) {
-            return response || fetch(event.request).then(function(response) {
-              cache.put(event.request, response.clone());
-              return response;
+            return cache.match(event.request).then(function (response) {
+              return response || fetch(event.request).then(function(response) {
+                cache.put(event.request, response.clone());
+                return response;
+              })
+
+
             })
-
-
-          })
+          }
         }
       })
   )
