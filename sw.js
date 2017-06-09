@@ -45,7 +45,11 @@ self.addEventListener('install', function(event) {
     caches.open(CURRENT_CACHES).then(function(cache) {
       return cache.addAll(
         [
-           './'
+           './',
+          'sw.js',
+           'scripts/main.js',
+           'index.html',
+           'styles/index.css',
         ]
       );
     })
