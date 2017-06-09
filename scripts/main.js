@@ -97,8 +97,8 @@ function subscribeUser() {
 }
 
 function initialiseUI() {
-  pushButton.addEventListener('click', function() {
-    pushButton.disabled = true;
+  //pushButton.addEventListener('click', function() {
+  //  pushButton.disabled = true;
     if (isSubscribed) {
       // TODO: Unsubscribe user
     } else {
