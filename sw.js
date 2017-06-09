@@ -42,6 +42,7 @@ var CURRENT_CACHES = {
 
 self.addEventListener('install', function(event) {
   var urlsToPrefetch = [
+
     'scripts/main.js',
     'index.html',
     'styles/index.css',
@@ -76,7 +77,11 @@ self.addEventListener('activate', function(event) {
 });
 
 
+self.addEventListener('click',function(event){
 
+   debugger;
+
+})
 
 self.addEventListener('fetch', function(event) {
   console.log(event.request.url);
