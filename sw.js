@@ -21,7 +21,6 @@
 
 'use strict';
 
-
 self.addEventListener('push', function(event) {
   console.log('[Service Worker] Push Received.');
   console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
@@ -36,21 +35,29 @@ self.addEventListener('push', function(event) {
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
-var CURRENT_CACHES = {prefetch:'prefetch-cache-v2'};
+var CACHE_VERSION = 2;
+var CURRENT_CACHES = {
+  prefetch: 'prefetch-cache-v' + CACHE_VERSION
+};
 
 self.addEventListener('install', function(event) {
-  console.log('entro---no');
+  var urlsToPrefetch = [
+    './',
+    'sw.js',
+   'scripts/main.js',
+   'index.html',
+   'styles/index.css',
+  ];
+
+  // All of these logging statements should be visible via the "Inspect" interface
+  // for the relevant SW accessed via chrome://serviceworker-internals
+  console.log('Handling install event. Resources to prefetch:', urlsToPrefetch);
+
+  self.skipWaiting();
+
   event.waitUntil(
     caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
-      return cache.addAll(
-        [
-           './',
-          'sw.js',
-           'scripts/main.js',
-           'index.html',
-           'styles/index.css',
-        ]
-      );
+      return cache.addAll(urlsToPrefetch);
     })
   );
 });
@@ -69,48 +76,21 @@ self.addEventListener('activate', function(event) {
   );
 });
 
-
 self.addEventListener('fetch', function(event) {
-  console.log(event.request.url);
+  console.log(event);
+  if(navigator.onLine){
+  console.log('online');
+ } else {
+  console.log('offline');
+ }
   event.respondWith(
-  if((!navigator.onLine)&&(event.request.url.includes("https://trim-mode-139918.firebaseio.com"))){
-      caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
-
-        return cache.add(event.request)
-          })
-  }else{
-
-    caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
-        cache.matchAll('https://trim-mode-139918.firebaseio.com/').then(function(response) {
-          response.forEach(function(element, index, array) {
-            console.log(element)
-            event.respondWith(element)
-            cache.delete(element);
-          });
+    caches.open(CURRENT_CACHES).then(function(cache) {
+      return cache.match(event.request).then(function (response) {
+        return response || fetch(event.request).then(function(response) {
+          cache.put(event.request, response.clone());
+          return response;
         });
-        cache.match('scripts/main.js').then(function(r){console.log("en cache")},function(r){
-                cache.add('scripts/main.js')
-
-        })
-        cache.match('https://dpzd3wxxq6kma.cloudfront.net/img/moni-moible.png').then(function(r){console.log("en cache")},function(r){
-                cache.add('https://dpzd3wxxq6kma.cloudfront.net/img/moni-moible.png')
-
-        })
-        cache.match('styles/index.css').then(function(r){console.log("en cache")},function(r){
-                cache.add('styles/index.css')
-
-        })
-        cache.match('index.html').then(function(r){console.log("en cache")},function(r){
-                cache.add('index.html')
-
-        })
-
-
-    )
+      });
     })
-
-
-
-  }
-
+  );
 });
