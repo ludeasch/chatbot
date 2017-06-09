@@ -42,7 +42,6 @@ var CURRENT_CACHES = {
 
 self.addEventListener('install', function(event) {
   var urlsToPrefetch = [
-    './',
     'sw.js',
     'scripts/main.js',
     'index.html',
@@ -82,19 +81,16 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('fetch', function(event) {
   console.log(event);
-  if(navigator.onLine){
-  console.log('online');
- } else {
-  console.log('offline');
- }
-  event.respondWith(
-    caches.open(CURRENT_CACHES).then(function(cache) {
-      return cache.match(event.request).then(function (response) {
-        return response || fetch(event.request).then(function(response) {
-          cache.put(event.request, response.clone());
-          return response;
+  if!(navigator.onLine){
+    event.respondWith(
+      caches.open(CURRENT_CACHES).then(function(cache) {
+        return cache.match(event.request).then(function (response) {
+          return response || fetch(event.request).then(function(response) {
+            cache.put(event.request, response.clone());
+            return response;
+          });
         });
-      });
-    })
-  );
+      })
+    );
+ }
 });
