@@ -91,8 +91,9 @@ self.addEventListener('fetch', function(event) {
                 cache.add('scripts/main.js')
 
         })
-        cache.match('README.md').then(function(r){console.log("en cache")},function(r){
-                cache.add('README.md')
+        cache.match('https://dpzd3wxxq6kma.cloudfront.net/img/moni-moible.png').then(function(r){console.log("en cache")},function(r){
+                cache.add('https://dpzd3wxxq6kma.cloudfront.net/img/moni-moible.png')
+                console.log("cacho")
 
         })
         cache.match('styles/index.css').then(function(r){console.log("en cache")},function(r){
