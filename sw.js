@@ -69,12 +69,7 @@ self.addEventListener('activate', function(event) {
   );
 });
 
-  //cache.matchAll('https://trim-mode-139918.firebaseio.com/').then(function(response) {
-            //response.forEach(function(element, index, array) {
-              //console.log(element)
-              ////event.respondWith(element)
-              //cache.delete(element);
-            //});
+
 
 
 self.addEventListener('fetch', function(event) {
