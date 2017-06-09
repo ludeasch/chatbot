@@ -39,7 +39,7 @@ self.addEventListener('push', function(event) {
 var CURRENT_CACHES = 'cache-v2';
 
 self.addEventListener('install', function(event) {
-  console.log('entro---');
+  console.log('entro---no');
   event.waitUntil(
     caches.open(CURRENT_CACHES).then(function(cache) {
       return cache.addAll(
